@@ -104,6 +104,7 @@
 		3CB911D72B78E891009DF781 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB911D62B78E891009DF781 /* URLRequestExtension.swift */; };
 		3CB911D92B78EB3F009DF781 /* URLRequestExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB911D82B78EB3F009DF781 /* URLRequestExtensionTests.swift */; };
 		3CC483472BDE955C00E4730F /* PipelineSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC483462BDE955C00E4730F /* PipelineSheetConfig.swift */; };
+		4C554FFB2CA0F787004ABB70 /* AuthorizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C554FFA2CA0F787004ABB70 /* AuthorizationType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +233,7 @@
 		3CB911D62B78E891009DF781 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestExtension.swift; sourceTree = "<group>"; };
 		3CB911D82B78EB3F009DF781 /* URLRequestExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestExtensionTests.swift; sourceTree = "<group>"; };
 		3CC483462BDE955C00E4730F /* PipelineSheetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineSheetConfig.swift; sourceTree = "<group>"; };
+		4C554FFA2CA0F787004ABB70 /* AuthorizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,6 +452,7 @@
 				039B524529676D0700994910 /* Build.swift */,
 				03B263F12B50968800CA989A /* StatusChange.swift */,
 				3C3ADA2A2BC0DAA500AEEEA1 /* PipelineDocument.swift */,
+				4C554FFA2CA0F787004ABB70 /* AuthorizationType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				03F31CFA25B8D52F005299A8 /* NotificationSettings.swift in Sources */,
 				0331F39F29A8155000245956 /* MenuExtraViewModel.swift in Sources */,
 				03F9B894297D38AA00FA866E /* Pipeline.Status.swift in Sources */,
+				4C554FFB2CA0F787004ABB70 /* AuthorizationType.swift in Sources */,
 				3C4DEDA22B49AB7A00B85A8C /* NSWorkspaceExtension.swift in Sources */,
 				3CB911D52B7142A0009DF781 /* URLSessionExtension.swift in Sources */,
 				03BD7E892598E579000F9495 /* AppDelegate.swift in Sources */,

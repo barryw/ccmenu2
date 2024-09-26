@@ -23,7 +23,7 @@ class CCTrayPipelineBuilder: ObservableObject {
     
     var canMakePipeline: Bool {
         // We're not calling makePipeline, even though that would reduce some
-        // duplication, because makePipeline interacts with the keychin.
+        // duplication, because makePipeline interacts with the keychain.
         return (URL(string: feedUrl) != nil) && (project != nil)
     }
 
@@ -41,18 +41,32 @@ class CCTrayPipelineBuilder: ObservableObject {
 
 
     static func applyCredential(_ credential: HTTPCredential?, toURL url: URL) -> URL {
+        let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "application")
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return url }
         if let credential, !credential.isEmpty {
-            components.user = credential.user
-            if !credential.password.isEmpty {
+            switch credential.authType {
+            case .bearer:
+                Keychain.standard.setAuthType(forURL: url.absoluteString, authType: credential.authType)
                 do {
-                    let newUrl = components.url?.absoluteURL ?? url
-                    try Keychain.standard.setPassword(credential.password, forURL: newUrl.absoluteString)
+                    try Keychain.standard.setToken(credential.bearerToken, forService: url.absoluteString)
                 } catch {
-                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "application")
-                    logger.error("Error when storing password in keychain: \(error.localizedDescription, privacy: .public)")
+                    logger.error("Error when storing bearer token in keychain: \(error.localizedDescription, privacy: .public)")
+                }
+                components.user = nil
+            case .none:
+                components.user = nil
+            case .basic:
+                components.user = credential.user
+                if !credential.password.isEmpty {
+                    do {
+                        let newUrl = components.url?.absoluteURL ?? url
+                        try Keychain.standard.setPassword(credential.password, forURL: newUrl.absoluteString)
+                    } catch {
+                        logger.error("Error when storing password in keychain: \(error.localizedDescription, privacy: .public)")
+                    }
                 }
             }
+            
         } else {
             components.user = nil
         }

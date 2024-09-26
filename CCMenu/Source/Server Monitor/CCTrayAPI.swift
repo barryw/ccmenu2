@@ -9,9 +9,11 @@ import Foundation
 struct HTTPCredential {
     var user: String
     var password: String
+    var bearerToken: String
+    var authType: AuthorizationType
 
     var isEmpty: Bool {
-        user.isEmpty && password.isEmpty
+        (authType == .none) || (authType == .basic && user.isEmpty && password.isEmpty) || (authType == .bearer && bearerToken.isEmpty)
     }
 }
 
@@ -21,11 +23,22 @@ class CCTrayAPI {
         var request = URLRequest(url: url)
 
         if let credential {
-            let v = URLRequest.basicAuthValue(user: credential.user, password: credential.password)
-            request.setValue(v, forHTTPHeaderField: "Authorization")
+            var v: String?
+            
+            switch credential.authType {
+            case .none:
+                break
+            case .basic:
+                v = URLRequest.basicAuthValue(user: credential.user, password: credential.password)
+            case .bearer:
+                v = URLRequest.bearerAuthValue(token: credential.bearerToken)
+            }
+            
+            if let v {
+                request.setValue(v, forHTTPHeaderField: "Authorization")
+            }
         }
 
         return request
     }
-
 }

@@ -9,8 +9,7 @@ import SwiftUI
 struct AddCCTrayPipelineSheet: View {
     @Binding var config: PipelineSheetConfig
     @Environment(\.presentationMode) @Binding var presentation
-    @State var useBasicAuth = false
-    @State var credential = HTTPCredential(user: "", password: "")
+    @State var credential = HTTPCredential(user: "", password: "", bearerToken: "", authType: .none)
     @StateObject private var projectList = CCTrayProjectList()
     @StateObject private var builder = CCTrayPipelineBuilder()
 
@@ -23,7 +22,7 @@ struct AddCCTrayPipelineSheet: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom)
 
-            CCTrayAuthView(useBasicAuth: $useBasicAuth, credential: $credential)
+            CCTrayAuthView(credential: $credential)
             .padding(.bottom)
 
             Form {
@@ -78,9 +77,8 @@ struct AddCCTrayPipelineSheet: View {
     }
 
     private var credentialOptional: HTTPCredential? {
-        (useBasicAuth && !credential.isEmpty) ? credential : nil
+        credential.isEmpty ? nil : credential
     }
-    
 }
 
 

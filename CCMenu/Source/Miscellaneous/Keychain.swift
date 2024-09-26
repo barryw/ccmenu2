@@ -28,6 +28,21 @@ class Keychain {
         lock = NSLock()
         cache = Dictionary()
     }
+    
+    func setAuthType(forURL urlString: String, authType: AuthorizationType) {
+        lock.lock()
+        defer { lock.unlock() }
+        
+        UserDefaults.standard.setValue(authType.rawValue, forKey: urlString)
+    }
+    
+    func getAuthType(forURL urlString: String) -> AuthorizationType {
+        let authTypeString = UserDefaults.standard.string(forKey: urlString) ?? "none"
+        if let authType = AuthorizationType(rawValue: authTypeString) {
+            return authType
+        }
+        return .none
+    }
 
     func setPassword(_ password: String, forURL urlString: String) throws {
         let url = try getOrThrow(error: .invalidURLErr) { URL(string: urlString) }
